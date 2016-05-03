@@ -30,6 +30,31 @@ typedef struct fractal{
     double ** pixels;
 		char * name;
 } fractal;
+
+void set_pixels(fractal * fract){
+  int i, j;
+  int f_height = fract->height;
+  int f_width = fract->width;
+  for(i =0; i< f_width; i++){
+    for(j=0; j<f_height; j++){
+      set_value(fractal_compute_value(fract, i, j));
+    }
+  }
+}
+
+double get_mean_value(fract){
+  int i, j;
+  int f_height = fract->height;
+  int f_width = fract->width;
+  double count;
+  for(i =0; i< f_width; i++){
+    for(j=0; j< f_height; j++){
+      count += get_value(fract,i,j);
+    }
+  }
+  return count/(f_width*f_height);
+}
+
 void consumer(){
 	int end_of_slots = 10;
 	int i =0;
