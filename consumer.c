@@ -1,3 +1,35 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include "fractal.h"
+#include <semaphore.h>
+
+typedef enum { false, true } bool;
+pthread_mutex_t mutexFractal;
+pthread_mutex_t meanMutex;
+sem_t empty;
+sem_t full;
+int MAXTHREADS=1;
+int FILEAMOUNT=0;
+fractal * slots[10];
+bool noMoreFiles = false;
+char files [100][100];
+int printAll;
+fractal *emptyFract;
+double highest_mean_value;
+fractal highest_fract;
+
+
+
+typedef struct fractal{
+    int height;
+    int width;
+    double a;
+    double b;
+    double ** pixels;
+		char * name;
+} fractal;
 void consumer(){
 	int end_of_slots = 10;
 	int i =0;
