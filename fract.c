@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 typedef struct fractal{
     int height;
@@ -7,14 +8,16 @@ typedef struct fractal{
     double a;
     double b;
     double ** pixels;
+		char * name;
 } fractal;
 
-void * fractal_new (int w, int h, double aa, double bb){
+void * fractal_new (int w, int h, double aa, double bb, char * fname){
   fractal * fract = malloc(sizeof(fractal));
   fract->height=h;
   fract->width = w;
   fract->a = aa;
   fract->b = bb;
+  fract->name = fname;
   fract->pixels = (double**)calloc(w, sizeof(double*));
   int i = 0;
   for (i; i < w; i++)
@@ -61,26 +64,6 @@ int set_value(fractal * fract, double value, int x, int y){
 double get_value(fractal * fract, int x, int y){
   return (fract->pixels[x][y]);
 }
-
-void main(int argc, char *argv[]){
-  void * fract = fractal_new(10, 10, -0.8, 0.4);
-  int height = fractal_get_height(fract);
-  int width = fractal_get_width(fract);
-  double a = fractal_get_a(fract);
-  double b = fractal_get_b(fract);
-  printf("height: %d\nwidth: %d\na: %f\nb: %f\n", height, width, a, b);
-  double x = 5.12345;
-  if (set_value(fract, x, 4,4 ) == 1)
-    printf("ben bravo\n");
-  else {
-    int i;
-    int j;
-    for(i=0; i<height; i++){
-      for(j=0; j<width; j++){
-        printf("%f  ", get_value(fract, j , i));
-      }
-      printf("\n");
-    }
-  }
-  fractal_free(fract);
+char * get_name(fractal * fract){
+  return (fract->name);
 }
